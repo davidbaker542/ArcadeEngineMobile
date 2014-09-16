@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
-	<classpathentry kind="lib" path="E:/Programs/ADK/sdk/platforms/android-19/android.jar">
+	<classpathentry kind="lib" path="F:/Programs/ADK/sdk/platforms/android-19/android.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="http://developer.android.com/reference/"/>
 		</attributes>

@@ -1,6 +1,7 @@
 package com.aem.src.gui;
 
 import com.aem.src.AnimActivity;
+import com.aem.src.Graphics;
 
 public abstract class Gui {
 
@@ -11,4 +12,13 @@ public abstract class Gui {
 		this.act = act;
 		
 	}
+	
+	public Gui getParent() {
+		
+		//TODO
+		return null;
+	}
+	
+	public abstract void drawGui(Graphics g);
+	public abstract void updateGui();
 }

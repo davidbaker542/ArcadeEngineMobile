@@ -105,7 +105,6 @@ public abstract class AnimActivity extends Activity implements Runnable{
 	}
 
 	public abstract void renderFrame(Graphics g);
-	
 	public abstract void process();
 	
 	private int FPS = 0, fpsLoop = 0;
@@ -114,6 +113,16 @@ public abstract class AnimActivity extends Activity implements Runnable{
 	public int getFPS() {
 		
 		return FPS;
+	}
+	
+	public int getWidth() {
+		
+		return scrSize.x;
+	}
+	
+	public int getHeight() {
+		
+		return scrSize.y;
 	}
 	
 	public void calculateRenderFPS() {
