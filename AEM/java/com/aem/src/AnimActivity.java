@@ -3,12 +3,17 @@ package com.aem.src;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
+import android.hardware.TriggerEvent;
+import android.hardware.TriggerEventListener;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,6 +22,15 @@ import android.view.Window;
 public abstract class AnimActivity extends Activity implements Runnable{
 
 	private long timerDelay = 60;
+	
+	
+	private SensorManager mSensorManager;
+	
+	private Sensor senseGyro;
+	private Sensor senseAccel;
+	
+	private TriggerEventListener trigEventGyro;
+	private TriggerEventListener trigEventAccel;
 	
 	protected View decorView;
 	protected ActionBar actionBar;
@@ -27,6 +41,7 @@ public abstract class AnimActivity extends Activity implements Runnable{
 	private Thread p;
 	
 	private volatile boolean running = false;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +57,61 @@ public abstract class AnimActivity extends Activity implements Runnable{
 		Display display = getWindowManager().getDefaultDisplay();
 		scrSize = new Point();
 		display.getSize(scrSize);
+		
+		mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+		
+		senseGyro = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+		senseAccel = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		
+		trigEventGyro = new TriggerEventListener() {
+
+			@Override
+			public void onTrigger(TriggerEvent arg0) {
+				
+				float[] arr = { arg0.values[0], arg0.values[1], arg0.values[2] };
+				
+				AnimActivity.this.onEventGyro(arr);			
+			}
+		};
+		
+		
+		trigEventAccel = new TriggerEventListener() {
+
+			@Override
+			public void onTrigger(TriggerEvent arg0) {
+				
+				float[] arr = { arg0.values[0], arg0.values[1], arg0.values[2] };
+				
+				AnimActivity.this.onEventAccel(arr);			
+			}
+		};
+		
+		mSensorManager.requestTriggerSensor(trigEventGyro, senseGyro);
+		mSensorManager.requestTriggerSensor(trigEventAccel, senseAccel);
 	}
+	
+	
+	/**
+	 * Override this method in your class to use it
+	 * 
+	 * @param sensors x,y,z - Actual rotation of the device
+	 */
+	public void onEventGyro(float[] sensors) {
+		
+		
+	}
+	
+	/**
+	 * Override this method in your class to use it
+	 * 
+	 * @param sensors x,y,z - Change in rotation of the device
+	 */
+	public void onEventAccel(float[] sensors) {
+		
+		
+	}
+	
+	
 
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
@@ -175,6 +244,11 @@ public abstract class AnimActivity extends Activity implements Runnable{
 		
 		return false;
 	}
+	
+//	public int[] getGyroSensors() {
+//		
+//		
+//	}
 
 
 }
